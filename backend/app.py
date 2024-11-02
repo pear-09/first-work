@@ -1,15 +1,35 @@
-from flask import Flask
-from flask import request, jsonify
+from flask import Flask, request, jsonify
 from data import Record, load_records, save_records
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)  # 对整个应用启用 CORS
 
-@app.route('/add_record', methods=['POST'])
+JSON_FILE_PATH = 'data/records.json'
+
+def get_next_id():
+    try:
+        records = load_records(JSON_FILE_PATH)
+        if records:
+            max_id = max(record.id for record in records)
+            return max_id + 1
+        else:
+            return 1
+    except (FileNotFoundError, json.JSONDecodeError):
+        return 1
+
+@app.route('api/record/add', methods=['POST'])
 def add_record():
-    """新增一条记录"""
-    pass
+    data = request.get_json()
+    amount = data.get('amount')
+    if amount is not None and amount == 0:
+        return jsonify({"error": "无意义"})
+    new_id = get_next_id()
+    new_record = Record(new_id, data.get('date'), amount, data.get('category'), data.get('note'))
+    records = load_records('data/records.json')
+    records.append(new_record)
+    save_records(records, 'data/records.json')
+    return jsonify({"message": "添加成功"})
 
 @app.route('/get_record/<int:record_id>', methods=['GET'])
 def get_record_by_id(record_id):
