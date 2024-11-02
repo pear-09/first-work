@@ -53,10 +53,37 @@ def delete_record(record_id):
     """删除指定ID的记录"""
     pass
 
-@app.route('/search_records', methods=['GET'])
+@app.route('/api/record/search', methods=['GET'])
 def search_records():
-    """根据条件搜索记录"""
-    pass
+    """根据条件搜索记录并返回统计结果"""
+    records = load_records()
+
+    # 获取查询参数
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+    category = request.args.get('category')
+
+    # 筛选符合条件的记录
+    filtered_records = [
+        record for record in records
+        if (not start_date or record['date'] >= start_date) and
+           (not end_date or record['date'] <= end_date) and
+           (not category or record['category'] == category)
+    ]
+
+    # 计算总收入和总支出
+    total_income = sum(record['amount'] for record in filtered_records if record['amount'] > 0)
+    total_expense = sum(-record['amount'] for record in filtered_records if record['amount'] < 0)
+    balance = total_income - total_expense
+
+    # 返回结果
+    response = {
+        "message": "success",
+        "total_income": total_income,
+        "total_expense": total_expense,
+        "balance": balance
+    }
+    return jsonify(response)
 
 
 if __name__ == '__main__':
