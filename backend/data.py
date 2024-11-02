@@ -35,19 +35,24 @@ class Record:
         return f"Record(id={self.id}, date='{self.date}', amount={self.amount}, category='{self.category}', note='{self.note}')"
 
 def load_records(filename='data/records.json'):
-    """从JSON文件加载所有记录"""
+    """从JSON文件加载所有记录并将其转换为Record对象列表"""
     records = []
     if os.path.exists(filename):
         with open(filename, 'r', encoding='utf-8') as file:
             data = json.load(file)
             for item in data.get("records", []):
-                # 假设Record类存在，可以直接用它创建记录对象
-                record = Record(
-                    id=item.get("id"),
-                    date=item.get("date"),
-                    amount=item.get("amount"),
-                    category=item.get("category"),
-                    note=item.get("note")
-                )
+                # 使用 from_dict 方法将字典转换为 Record 对象
+                record = Record.from_dict(item)
                 records.append(record)
     return records
+
+def save_records(records, filename='data/records.json'):
+    """将记录列表保存到 JSON 文件"""
+    # 将 Record 对象列表转换为字典列表
+    data = {
+        "records": [record.to_dict() for record in records]
+    }
+    
+    # 将数据写入 JSON 文件
+    with open(filename, 'w', encoding='utf-8') as file:
+        json.dump(data, file, ensure_ascii=False, indent=4)
