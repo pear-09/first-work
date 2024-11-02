@@ -10,7 +10,7 @@
             <div class="navy">
                 <ul>
                     <li><RouterLink to="/shouye" active-class="active">首页</RouterLink></li>
-                    <li><RouterLink to="/jilu" active-class="active">我的记账</RouterLink></li>
+                    <li><RouterLink to="/jilu" active-class="active">记账</RouterLink></li>
                     <li><RouterLink to="/chakan" active-class="active">数据查看</RouterLink></li>
                     <li><RouterLink to="/tongji" active-class="active">收支统计</RouterLink></li>
                     
