@@ -4,10 +4,11 @@
 import { createRouter,createWebHashHistory} from "vue-router";
 //引入一个一个可能要呈现的组件
 
-import Home from "@/view/Home.vue";
-import Record from "@/view/Record.vue";
-import Check from "@/view/Check.vue";
-import Count from "@/view/Count.vue";
+
+import ShouYe from "@/view/ShouYe.vue";
+import ChaKan from "@/view/ChaKan.vue";
+import TongJi from "@/view/TongJi.vue";
+import JiLu from "@/view/JiLu.vue";
 
 //2.创建路由器
 const router = createRouter({
@@ -15,26 +16,26 @@ const router = createRouter({
     routes:[
         {
             path:'/',
-            component:Home
+            component:ShouYe
         },
         {
-            path:'/home',
-            component:Home,
+            path:'/shouye',
+            component:ShouYe,
         },      
         {
-            name:'Record',
-            path:'/record',
-            component:Record
+            name:'JiLU',
+            path:'/jilu',
+            component:JiLu
         },
         {
-            name:'Check',
-            path:'/check',
-            component:Check
+            name:'ChaKan',
+            path:'/chakan',
+            component:ChaKan
         },
         {
-            name:'Count',
-            path:'/count',
-            component:Count
+            name:'TongJi',
+            path:'/tongji',
+            component:TongJi
         }
     ]
 })
