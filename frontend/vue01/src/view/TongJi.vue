@@ -18,12 +18,12 @@
 
       <button class="btn" @click="fetchIncomeStatistics">统计</button>
     </div>
-    
+
     <div class="results">
       <p><strong>总收入:</strong> {{ statistics.total_income }} 元</p>
       <p><strong>净收入:</strong> {{ statistics.balance }} 元</p>
     </div>
-    
+
     <div v-if="error" class="error">{{ error }}</div>
   </div>
 </template>
@@ -52,7 +52,6 @@ export default {
         }
 
         const data = await response.json();
-        // 只更新收入统计
         this.statistics.total_income = data.total_income;
         this.statistics.balance = data.balance; // 净收入等于总收入，假设没有支出数据
       } catch (err) {
@@ -83,6 +82,9 @@ body {
 }
 
 .filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   margin-bottom: 20px;
 }
 
@@ -92,6 +94,7 @@ body {
 
 input[type="date"], select {
   margin-right: 10px;
+  padding: 5px;
 }
 
 .btn {
