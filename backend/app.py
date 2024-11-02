@@ -11,13 +11,21 @@ def add_record():
 
 @app.route('/get_record/<int:record_id>', methods=['GET'])
 def get_record_by_id(record_id):
-    """根据记录ID获取单条记录"""
-    pass
+    records = load_records()
+
+    record_obj = next((record for record in records if record.id == record_id), None)
+    if record_obj:
+        # 转换为字典后返回，因为jsonify无法直接处理Record对象
+        return jsonify(record_obj.to_dict())
+    else:
+        return jsonify({"error": "Record not found"}), 404
 
 @app.route('/get_all_records', methods=['GET'])
 def get_all_records():
-    """获取所有记录"""
-    pass
+    records = load_records()  # 假设 load_records 返回的是 Record 对象列表
+    
+    # 将所有记录转换为字典列表并返回 JSON 响应
+    return jsonify([record.to_dict() for record in records])
 
 @app.route('/update_record/<int:record_id>', methods=['PUT'])
 def update_record(record_id):
