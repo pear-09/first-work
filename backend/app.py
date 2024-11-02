@@ -2,6 +2,7 @@ from flask import Flask
 
 app = Flask(__name__)
 
+
 @app.route('/add_record', methods=['POST'])
 def add_record():
     """新增一条记录"""
