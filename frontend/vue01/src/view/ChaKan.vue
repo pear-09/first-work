@@ -105,7 +105,7 @@
 export default {
   data() {
     return {
-      records: [], // 从后端获取的记录
+      records: [],
       startDate: '',
       endDate: '',
       selectedCategory: '',
@@ -143,7 +143,7 @@ export default {
           throw new Error('网络响应不是正常的');
         }
         this.records = await response.json();
-        this.filteredRecords = this.records; // 初始化过滤记录
+        this.filteredRecords = this.records;
       } catch (error) {
         console.error('获取记录失败:', error);
       }
@@ -169,7 +169,6 @@ export default {
       // 处理提交交易的逻辑
       // 这里需要将 transaction 对象发送到后端
       this.dialogVisible = false; // 关闭对话框
-      // 重新获取记录以更新显示
       this.fetchRecords();
     }
   },
@@ -177,7 +176,7 @@ export default {
     this.fetchRecords(); // 组件挂载后获取记录
   }
 };
-</script >
+</script>
 
 <style scoped>
 * {
@@ -195,10 +194,28 @@ body {
   max-width: 800px;
   margin: 0 auto;
   text-align: center;
+  padding: 20px;
 }
 
 .filter {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+}
+
+.filter label {
+  margin-right: 10px;
+}
+
+.filter input,
+.filter select {
+  margin: 0 10px 10px 0;
+  padding: 8px;
+}
+
+.dialog {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 table {
@@ -209,10 +226,18 @@ table {
 
 th, td {
   border: 1px solid #ccc;
-  padding: 8px;
+  padding: 12px;
 }
 
 th {
   background-color: #f8f8f8;
+}
+
+h2 {
+  margin-top: 30px;
+}
+
+p {
+  margin: 10px 0;
 }
 </style>
