@@ -93,6 +93,7 @@ def search_records():
     # 返回结果
     response = {
         "message": "success",
+        "records": filtered_records,
         "total_income": total_income,
         "total_expense": total_expense,
         "balance": balance
