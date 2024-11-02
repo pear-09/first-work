@@ -29,7 +29,8 @@ class Record:
             date=data.get("date"),
             amount=data.get("amount"),
             category=data.get("category"),
-            note=data.get("note")
+            note=data.get("note"),
+            type=data.get("type")  # 添加这行以获取 type 参数
         )
 
     def __repr__(self):

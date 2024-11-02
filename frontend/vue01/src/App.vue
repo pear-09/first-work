@@ -11,7 +11,7 @@
 // eslint-disable-next-line no-unused-vars
 // import { RouterView ,RouterLink} from 'vue-router';
 
-import NaVy from './components/NaVy'
+import NaVy from './components/Navy'
 // import ShouYe from './views/ShouYe'
 // import FaBu from './views/FaBu'
 // import DengLu from './views/DengLu'
