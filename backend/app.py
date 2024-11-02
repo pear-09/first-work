@@ -1,9 +1,8 @@
 from flask import Flask
 from flask import request, jsonify
-
+from data import Record, load_records
 
 app = Flask(__name__)
-
 
 @app.route('/add_record', methods=['POST'])
 def add_record():
