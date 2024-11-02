@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 导航栏 -->
-    <NaVy />
+    <Navy />
     <!-- 展示区 -->
     <!-- <ShouYe /> -->
   </div>
@@ -11,7 +11,9 @@
 // eslint-disable-next-line no-unused-vars
 // import { RouterView ,RouterLink} from 'vue-router';
 
-import NaVy from './components/NaVy'
+
+import Navy from './components/Navy'
+
 // import ShouYe from './views/ShouYe'
 // import FaBu from './views/FaBu'
 // import DengLu from './views/DengLu'
@@ -21,7 +23,7 @@ import NaVy from './components/NaVy'
 export default {
   name: 'App',
   components: {
-    NaVy
+    Navy
   }
 }
 </script>

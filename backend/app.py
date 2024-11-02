@@ -1,11 +1,12 @@
-from flask import Flask, request, jsonify
+from datetime import datetime
+from flask import Flask, json, request, jsonify
 from data import Record, load_records, save_records
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)  # 对整个应用启用 CORS
 
-JSON_FILE_PATH = 'data/records.json'
+JSON_FILE_PATH = './data/records.json'
 
 def get_next_id():
     try:
@@ -97,24 +98,42 @@ def delete_record(record_id):
 @app.route('/api/record/search', methods=['GET'])
 def search_records():
     """根据条件搜索记录并返回统计结果"""
-    records = load_records()
+    try:
+        records = load_records(JSON_FILE_PATH)  # 明确传递文件路径
+    except Exception as e:
+        return jsonify({"message": "无法加载记录", "details": str(e)}), 500
 
     # 获取查询参数
-    start_date = request.args.get('start_date')
-    end_date = request.args.get('end_date')
+    start_date_str = request.args.get('start_date')
+    end_date_str = request.args.get('end_date')
     category = request.args.get('category')
     record_type = request.args.get('type')
 
-    # 筛选符合条件的记录
-    filtered_records = [
-        record for record in records
-        if (not start_date or record.date >= start_date) and
-           (not end_date or record.date <= end_date) and
-           (not category or record.category == category) and
-           (not record_type or record.type == record_type)
-    ]
+    # 解析日期字符串为 datetime 对象
+    date_format = "%Y-%m-%d"
+    try:
+        start_date = datetime.strptime(start_date_str, date_format) if start_date_str else None
+        end_date = datetime.strptime(end_date_str, date_format) if end_date_str else None
+    except ValueError:
+        return jsonify({"message": "Invalid date format. Use YYYY-MM-DD."}), 400
 
-    # 根据type字段计算总收入和总支出
+    print(f"筛选条件 - 开始日期: {start_date_str}, 结束日期: {end_date_str}, 类别: {category}, 类型: {record_type}")
+
+    # 筛选符合条件的记录
+    filtered_records = []
+    for record in records:
+        record_date = datetime.strptime(record.date, date_format)
+        if start_date and record_date < start_date:
+            continue
+        if end_date and record_date > end_date:
+            continue
+        if category and record.category != category:
+            continue
+        if record_type and record.type != record_type:
+            continue
+        filtered_records.append(record)
+
+    # 计算总收入和总支出
     total_income = sum(record.amount for record in filtered_records if record.type == '收入')
     total_expense = sum(record.amount for record in filtered_records if record.type == '支出')
     balance = total_income - total_expense  # 余额计算
@@ -127,7 +146,7 @@ def search_records():
         "total_expense": total_expense,
         "balance": balance
     }
-    return jsonify(response)
+    return jsonify(response), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
