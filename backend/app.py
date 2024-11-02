@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import request, jsonify
-from data import Record, load_records
+from data import Record, load_records, save_records
 
 app = Flask(__name__)
 
@@ -46,12 +46,26 @@ def update_record(record_id):
     # 保存更新后的记录（假设有save_records函数可以覆盖现有记录集）
     save_records(records)  # 保存整个记录集到JSON文件
 
-    return jsonify({"message": "Record updated successfully", "record": record.to_dict()})
+    return jsonify({"message": "Record updated successfully"})
 
 @app.route('/delete_record/<int:record_id>', methods=['DELETE'])
 def delete_record(record_id):
     """删除指定ID的记录"""
-    pass
+    # 加载所有记录
+    records = load_records()  # 假设已有函数加载所有记录
+
+    # 查找指定ID的记录
+    record = next((r for r in records if r.id == record_id), None)
+    if record is None:
+        return jsonify({"error": "Record not found"}), 404
+
+    # 从列表中删除指定的记录
+    records = [r for r in records if r.id != record_id]
+
+    # 保存更新后的记录（假设有save_records函数可以覆盖现有记录集）
+    save_records(records)  # 保存整个记录集到JSON文件
+
+    return jsonify({"message": "Record deleted successfully"})
 
 @app.route('/api/record/search', methods=['GET'])
 def search_records():
