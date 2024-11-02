@@ -18,7 +18,7 @@ def get_next_id():
     except (FileNotFoundError, json.JSONDecodeError):
         return 1
 
-@app.route('api/record/add', methods=['POST'])
+@app.route('/api/record/add', methods=['POST'])
 def add_record():
     data = request.get_json()
     amount = data.get('amount')
