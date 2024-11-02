@@ -1,8 +1,10 @@
 from flask import Flask
 from flask import request, jsonify
 from data import Record, load_records, save_records
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  # 对整个应用启用 CORS
 
 @app.route('/add_record', methods=['POST'])
 def add_record():
