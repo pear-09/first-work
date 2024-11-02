@@ -68,7 +68,9 @@
 export default {
   data() {
     return {
-      records: [], // 显示的记录
+
+      records: [],
+
       startDate: '',
       endDate: '',
       selectedCategory: '',
@@ -86,9 +88,10 @@ export default {
         if (!response.ok) {
           throw new Error('网络响应不是正常的');
         }
-        const data = await response.json();
-        this.records = data;
-        this.calculateTotals(data);
+
+        this.records = await response.json();
+        this.filteredRecords = this.records;
+
       } catch (error) {
         console.error('获取记录失败:', error);
       }
@@ -125,14 +128,13 @@ export default {
         console.error('搜索记录失败:', error);
       }
     },
-    calculateTotals(records) {
-      this.totalIncome = records
-        .filter(record => record.type === '收入')
-        .reduce((sum, record) => sum + record.amount, 0);
-      this.totalExpense = records
-        .filter(record => record.type === '支出')
-        .reduce((sum, record) => sum + record.amount, 0);
-      this.balance = this.totalIncome - this.totalExpense;
+
+    submitTransaction() {
+      // 处理提交交易的逻辑
+      // 这里需要将 transaction 对象发送到后端
+      this.dialogVisible = false; // 关闭对话框
+      this.fetchRecords();
+
     }
   },
   mounted() {
@@ -161,25 +163,28 @@ body {
 }
 
 .filter {
-  margin-bottom: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+
+  margin-bottom: 30px;
 }
 
 .filter label {
-  margin-right: 5px;
+  margin-right: 10px;
+
 }
 
 .filter input,
 .filter select {
-  margin-right: 20px;
+
+  margin: 0 10px 10px 0;
+  padding: 8px;
 }
 
-button {
-  padding: 5px 10px;
-  cursor: pointer;
+.dialog {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
 }
 
 table {
@@ -190,7 +195,7 @@ table {
 
 th, td {
   border: 1px solid #ccc;
-  padding: 8px;
+  padding: 12px;
 }
 
 th {
@@ -198,6 +203,12 @@ th {
 }
 
 h2 {
-  margin-top: 20px;
+
+  margin-top: 30px;
+}
+
+p {
+  margin: 10px 0;
+
 }
 </style>
