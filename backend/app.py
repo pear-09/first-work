@@ -1,4 +1,6 @@
 from flask import Flask
+from flask import request, jsonify
+
 
 app = Flask(__name__)
 
@@ -28,30 +30,11 @@ def delete_record(record_id):
     """删除指定ID的记录"""
     pass
 
-@app.route('/get_recent_day_records', methods=['GET'])
-def get_recent_records():
-    """获取最近一天记录"""
+@app.route('/search_records', methods=['GET'])
+def search_records():
+    """根据条件搜索记录"""
     pass
 
-@app.route('/get_month_records', methods=['GET'])
-def get_month_records():
-    """获取指定月份的记录"""
-    pass
-
-@app.route('/get_recent_mouth_records', methods=['GET'])
-def get_recent_records():
-    """获取最近一个月记录"""
-    pass
-
-@app.route('/get_recent_year_records', methods=['GET'])
-def get_recent_records():
-    """获取最近一年记录"""
-    pass
-
-@app.route('/calculate_statistics', methods=['GET'])
-def calculate_statistics():
-    """统计总收入和总支出"""
-    pass
 
 if __name__ == '__main__':
     app.run(debug=True)
