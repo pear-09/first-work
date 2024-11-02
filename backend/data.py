@@ -2,12 +2,13 @@ import json
 import os
 
 class Record:
-    def __init__(self, id, date, amount, category, note):
+    def __init__(self, id, date, amount, category, note, type):
         self.id = id
         self.date = date
         self.amount = amount
         self.category = category
         self.note = note
+        self.type = type
 
     def to_dict(self):
         """将记录对象转换为字典"""
@@ -16,7 +17,8 @@ class Record:
             "date": self.date,
             "amount": self.amount,
             "category": self.category,
-            "note": self.note
+            "note": self.note,
+            "type": self.type  
         }
 
     @staticmethod
@@ -32,7 +34,7 @@ class Record:
 
     def __repr__(self):
         """定义对象的字符串表示形式，便于调试"""
-        return f"Record(id={self.id}, date='{self.date}', amount={self.amount}, category='{self.category}', note='{self.note}')"
+        return f"Record(id={self.id}, date='{self.date}', amount={self.amount}, category='{self.category}', note='{self.note}', type='{self.type}')"
 
 def load_records(filename='data/records.json'):
     """从JSON文件加载所有记录并将其转换为Record对象列表"""

@@ -24,41 +24,43 @@ def add_record():
     amount = data.get('amount')
     if amount is not None and amount == 0:
         return jsonify({"error": "无意义"})
+    
     new_id = get_next_id()
-    new_record = Record(new_id, data.get('date'), amount, data.get('category'), data.get('note'))
-    records = load_records('data/records.json')
+    # 创建新的记录对象，确保包含type字段
+    new_record = Record(
+        new_id,
+        data.get('date'),
+        amount,
+        data.get('category'),
+        data.get('note'),
+        data.get('type')
+    )
+    
+    records = load_records(JSON_FILE_PATH)
     records.append(new_record)
-    save_records(records, 'data/records.json')
+    save_records(records, JSON_FILE_PATH)
     return jsonify({"message": "添加成功"})
 
 @app.route('/get_record/<int:record_id>', methods=['GET'])
 def get_record_by_id(record_id):
     records = load_records()
-
     record_obj = next((record for record in records if record.id == record_id), None)
     if record_obj:
-        # 转换为字典后返回，因为jsonify无法直接处理Record对象
         return jsonify(record_obj.to_dict())
     else:
         return jsonify({"error": "Record not found"}), 404
 
 @app.route('/get_all_records', methods=['GET'])
 def get_all_records():
-    records = load_records()  # 假设 load_records 返回的是 Record 对象列表
-    
-    # 将所有记录转换为字典列表并返回 JSON 响应
+    records = load_records()
     return jsonify([record.to_dict() for record in records])
 
 @app.route('/update_record/<int:record_id>', methods=['PUT'])
 def update_record(record_id):
     """更新指定ID的记录，可以选择更新某个字段"""
-    # 从请求获取更新的字段数据
     data = request.get_json()
-    
-    # 加载所有记录
-    records = load_records()  # 假设已有函数加载所有记录
+    records = load_records()
 
-    # 查找指定ID的记录
     record = next((r for r in records if r.id == record_id), None)
     if record is None:
         return jsonify({"error": "Record not found"}), 404
@@ -72,29 +74,24 @@ def update_record(record_id):
         record.category = data['category']
     if 'note' in data:
         record.note = data['note']
+    if 'type' in data:  # 更新type字段
+        record.type = data['type']
 
-    # 保存更新后的记录（假设有save_records函数可以覆盖现有记录集）
-    save_records(records)  # 保存整个记录集到JSON文件
-
+    save_records(records)
     return jsonify({"message": "Record updated successfully"})
 
 @app.route('/delete_record/<int:record_id>', methods=['DELETE'])
 def delete_record(record_id):
     """删除指定ID的记录"""
-    # 加载所有记录
-    records = load_records()  # 假设已有函数加载所有记录
+    records = load_records()
 
-    # 查找指定ID的记录
     record = next((r for r in records if r.id == record_id), None)
     if record is None:
         return jsonify({"error": "Record not found"}), 404
 
     # 从列表中删除指定的记录
     records = [r for r in records if r.id != record_id]
-
-    # 保存更新后的记录（假设有save_records函数可以覆盖现有记录集）
-    save_records(records)  # 保存整个记录集到JSON文件
-
+    save_records(records)
     return jsonify({"message": "Record deleted successfully"})
 
 @app.route('/api/record/search', methods=['GET'])
@@ -106,30 +103,31 @@ def search_records():
     start_date = request.args.get('start_date')
     end_date = request.args.get('end_date')
     category = request.args.get('category')
+    record_type = request.args.get('type')
 
     # 筛选符合条件的记录
     filtered_records = [
         record for record in records
-        if (not start_date or record['date'] >= start_date) and
-           (not end_date or record['date'] <= end_date) and
-           (not category or record['category'] == category)
+        if (not start_date or record.date >= start_date) and
+           (not end_date or record.date <= end_date) and
+           (not category or record.category == category) and
+           (not record_type or record.type == record_type)
     ]
 
-    # 计算总收入和总支出
-    total_income = sum(record['amount'] for record in filtered_records if record['amount'] > 0)
-    total_expense = sum(-record['amount'] for record in filtered_records if record['amount'] < 0)
-    balance = total_income - total_expense
+    # 根据type字段计算总收入和总支出
+    total_income = sum(record.amount for record in filtered_records if record.type == '收入')
+    total_expense = sum(record.amount for record in filtered_records if record.type == '支出')
+    balance = total_income - total_expense  # 余额计算
 
     # 返回结果
     response = {
         "message": "success",
-        "records": filtered_records,
+        "records": [record.to_dict() for record in filtered_records],
         "total_income": total_income,
         "total_expense": total_expense,
         "balance": balance
     }
     return jsonify(response)
-
 
 if __name__ == '__main__':
     app.run(debug=True)
