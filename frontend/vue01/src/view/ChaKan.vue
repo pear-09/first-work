@@ -1,13 +1,13 @@
 <template>
-
-  </template>
+<p>11</p>
+</template>
     
   <script>
   
     
     
 export default {
-name: 'Check',
+name: 'ChaKan',
 components: {
 }
 }

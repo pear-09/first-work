@@ -1,5 +1,5 @@
 <template>
-    <p>home</p>
+<p>211\</p>
   </template>
     
   <script>
@@ -7,7 +7,7 @@
     
     
 export default {
-name: 'Home',
+name: 'JiLu',
 components: {
 }
 }

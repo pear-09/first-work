@@ -1,5 +1,5 @@
 <template>
-
+<p></p>
   </template>
     
   <script>
@@ -7,7 +7,7 @@
     
     
 export default {
-name: 'Count',
+name: 'TongJi',
 components: {
 }
 }
