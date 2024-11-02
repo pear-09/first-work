@@ -1,0 +1,163 @@
+[
+  {
+    "username": "user1",
+    "projects": [
+      {
+        "id": 1728108778076,
+        "title": "人工智能背景下的老人健康自动监控系统",
+        "num": "3",
+        "members": [
+          "user2"
+        ],
+        "category": "创业",
+        "subcategory": "科技创业",
+        "startDate": "2024-10-11",
+        "skills": "111111",
+        "content": "2222222222222222",
+        "creator": "user1",
+        "status": "进行中"
+      },
+      {
+        "id": 1728135820325,
+        "title": "随便吧",
+        "num": 3,
+        "members": [],
+        "category": "竞赛",
+        "subcategory": "学科技术类",
+        "startDate": "2024-10-18",
+        "skills": "B语言",
+        "content": "随着人们对健康管理的重视，开发一款基于人工智能的健康助手应用已成为趋势。该项目将利用机器学习和数据分析技术，设计一个可以实时监测用户健康状况的应用。用户可以通过应用记录自己的饮食、运动和心理状态，系统将根据数据分析提供个性化的健康建议。此外，应用还将包括提醒用户定期进行体检和心理评估的功能，旨在帮助用户更好地管理自己的健康，提高生活质量。111111111111111111111111111111111111111111111111111111111111111111",
+        "creator": "user1"
+      },
+      {
+        "id": 1728185733904,
+        "title": "数学建模",
+        "num": 3,
+        "members": [],
+        "category": "创业",
+        "subcategory": "科技创业",
+        "startDate": "2024-10-24",
+        "skills": "B语言",
+        "content": "移动端游戏开发大赛旨在发掘和培养优秀的游戏开发者。参赛者需要在规定的时间内设计并开发一款移动端游戏，比赛要求游戏具备创新性、趣味性和良好的用户体验。参赛者可以选择使用任意游戏引擎进行开发，并需注重游戏的流畅度和视觉效果。比赛的优胜者将有机会与知名游戏公司合作或获得资金支持，推动游戏项目的进一步发展。",
+        "status": "招募中",
+        "creator": "user1"
+      }
+    ],
+    "joinRequests": [
+      {
+        "projectId": 1728108778076,
+        "status": "未通过",
+        "requester": "user3",
+        "isHandled": true
+      },
+      {
+        "projectId": 1728108778076,
+        "status": "未通过",
+        "requester": "user2",
+        "isHandled": true
+      },
+      {
+        "projectId": 1728108778076,
+        "status": "待审核",
+        "requester": "user2",
+        "isHandled": false
+      }
+    ],
+    "sentRequests": [
+      {
+        "projectId": 1728108625669,
+        "status": "已通过"
+      },
+      {
+        "projectId": 1728108625669,
+        "status": "已通过"
+      },
+      {
+        "projectId": 1728108625669,
+        "status": "未通过"
+      },
+      {
+        "projectId": 1728146267838,
+        "status": "已通过"
+      }
+    ],
+    "alert": []
+  },
+  {
+    "username": "user2",
+    "projects": [
+      {
+        "id": 1728146267838,
+        "title": "测试",
+        "num": 8,
+        "members": [
+          "user1"
+        ],
+        "category": "竞赛",
+        "subcategory": "学科技术类",
+        "startDate": "2024-10-05",
+        "skills": "B语言",
+        "content": "12354676、",
+        "creator": "user2"
+      }
+    ],
+    "joinRequests": [
+      {
+        "projectId": 1728146267838,
+        "status": "已通过",
+        "requester": "user1",
+        "isHandled": true
+      }
+    ],
+    "sentRequests": [
+      {
+        "projectId": 1728108625669,
+        "status": "未通过"
+      },
+      {
+        "projectId": 1728108778076,
+        "status": "未通过"
+      },
+      {
+        "projectId": 1728108778076,
+        "status": "未通过"
+      },
+      {
+        "projectId": 1728108778076,
+        "status": "未通过"
+      },
+      {
+        "projectId": 1728108778076,
+        "status": "未通过"
+      }
+    ],
+    "alert": []
+  },
+  {
+    "username": "user3",
+    "projects": [
+      {
+        "id": 1728108625669,
+        "title": "测试发布creator功能",
+        "num": "5",
+        "members": [
+          "user1"
+        ],
+        "category": "创业",
+        "subcategory": "科技创业",
+        "startDate": "2024-10-10",
+        "skills": "JavaScript",
+        "content": "测试一下有没有添加。更新",
+        "creator": "user3"
+      }
+    ],
+    "joinRequests": [],
+    "sentRequests": [
+      {
+        "projectId": 1728108778076,
+        "status": "未通过"
+      }
+    ],
+    "alert": []
+  }
+]
